@@ -1,0 +1,51 @@
+name: Project checks
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ROOT_PASSWORD: ci-test-password
+          MYSQL_ROOT_HOST: "%"
+        ports: ["3306:3306"]
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost -pci-test-password"
+          --health-interval=10s --health-timeout=5s --health-retries=12
+    env:
+      DB_HOST: 127.0.0.1
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: ci-test-password
+      JWT_SECRET: ci-only-test-secret-never-use-for-deployment-01234567890123456789
+      RESET_DELIVERY: disabled
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            backend/package-lock.json
+            frontend/package-lock.json
+      - run: npm ci && npm run install:all
+      - run: npm test
+      - run: npm run typecheck
+      - run: npm run format:check
+      - run: npm run test:integration
+      - run: npm run test:e2e
+      - run: npm run build
+      - name: Install optional browser tooling
+        run: npm install --no-save --package-lock=false @playwright/test@1.64.1 && node node_modules/@playwright/test/cli.js install --with-deps chromium --no-shell
+      - run: npm run test:browser
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: browser-traces
+          path: test-results/browser
+          if-no-files-found: ignore

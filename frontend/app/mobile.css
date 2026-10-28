@@ -1,0 +1,904 @@
+/*
+ * Phone layer. Loaded after every other stylesheet; rules apply at 760px and
+ * narrower unless noted, so tablet and desktop keep their approved design.
+ * The page gutter on phones is 18px (see .container in redesign.css).
+ */
+
+/* Desktop and tablet: phone-only additions stay out of the layout. */
+.hero-quick {
+  display: none;
+}
+.home-flow,
+.home-block {
+  display: contents;
+}
+
+@media (max-width: 760px) {
+  /* ---------- Sitewide: dropdowns ----------
+   * Safari draws native selects about 23px tall with no border and ignores
+   * height until the native appearance is removed. 16px text stops iOS from
+   * zooming in when a field is tapped. */
+  select:not([multiple]):not([size]) {
+    -webkit-appearance: none;
+    appearance: none;
+    min-height: 48px;
+    padding: 0 40px 0 14px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background-color: #fff;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23526170' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 16px;
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.3;
+  }
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not(
+      [type="file"]
+    ):not([data-display-text]),
+  textarea {
+    font-size: 16px;
+  }
+
+  /* ---------- Home: hero ---------- */
+  .hero-grid {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 0;
+  }
+  .hero-visual {
+    display: block;
+    position: relative;
+    height: min(76vw, 330px);
+    margin: 0 -18px;
+    clip-path: none;
+    overflow: hidden;
+  }
+  .hero-visual img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 38% 62%;
+  }
+  .hero-visual::after {
+    background: linear-gradient(
+      180deg,
+      rgb(20 42 54 / 0%) 40%,
+      rgb(20 42 54 / 72%) 78%,
+      #142a36 100%
+    );
+  }
+  .hero-visual-caption {
+    display: none;
+  }
+  .hero-copy {
+    position: relative;
+    z-index: 1;
+    margin-top: -72px;
+    padding: 0 0 30px;
+  }
+  .hero .eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.14em;
+  }
+  .hero h1 {
+    max-width: none;
+    margin: 10px 0 12px;
+    font-size: clamp(34px, 10.4vw, 44px);
+    line-height: 1.04;
+  }
+  .hero p {
+    font-size: 16px;
+    line-height: 1.55;
+    color: #c6d1d8;
+  }
+  .hero-buttons {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+    margin-top: 24px;
+  }
+  .hero .btn.gold,
+  .hero-secondary {
+    width: 100%;
+    min-height: 54px;
+    justify-content: center;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .hero-secondary {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+    background: rgb(255 255 255 / 7%);
+    border: 1px solid rgb(255 255 255 / 26%);
+  }
+  .hero-note {
+    justify-content: center;
+    margin-top: 18px;
+    font-size: 12px;
+  }
+  .hero-quick {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 22px;
+  }
+  .hero-quick a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 86px;
+    padding: 12px 6px;
+    border-radius: 14px;
+    background: rgb(255 255 255 / 7%);
+    border: 1px solid rgb(255 255 255 / 13%);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.25;
+    text-align: center;
+  }
+  .hero-quick svg {
+    color: var(--gold);
+  }
+
+  /* ---------- Home: search card ---------- */
+  .search-container {
+    margin-top: 18px;
+  }
+  .home-search {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+    padding: 16px;
+    border-radius: 18px;
+  }
+  .vehicle-type-choice {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding-bottom: 14px;
+  }
+  .vehicle-type-choice button {
+    min-height: 48px;
+    padding: 10px 8px;
+    border-radius: 12px;
+    font-size: 14px;
+  }
+  .home-search .search-intro {
+    display: none;
+  }
+  .home-search label {
+    border: 0;
+    padding: 0;
+  }
+  .home-search label > span {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .home-search input,
+  .home-search select {
+    min-height: 50px;
+    padding: 0 14px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #fff;
+    font-size: 16px;
+  }
+  .home-search .btn {
+    width: 100%;
+    min-height: 52px;
+    justify-content: center;
+    border-radius: 12px;
+  }
+
+  /* ---------- Home: phone order ----------
+   * Listings come straight after the categories; the longer explainers follow.
+   * Equal orders keep their source order. */
+  .home-flow {
+    display: flex;
+    flex-direction: column;
+  }
+  .home-block {
+    display: block;
+  }
+  .home-flow > * {
+    order: 10;
+  }
+  .home-flow > .home-categories {
+    order: 1;
+  }
+  .home-flow > .home-passenger {
+    order: 2;
+  }
+  .home-flow > .home-commercial {
+    order: 3;
+  }
+  .home-flow > .home-cabs {
+    order: 4;
+  }
+  .home-flow > .visit-banner {
+    order: 5;
+  }
+
+  /* ---------- Home: categories as two compact tiles ---------- */
+  .home-categories {
+    padding-block: 34px 6px;
+  }
+  .home-categories .section-heading {
+    margin-bottom: 16px;
+  }
+  .home-categories .section-heading > p {
+    display: none;
+  }
+  .section-heading h2 {
+    font-size: 27px;
+  }
+  .home-categories .category-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .home-categories .category-card {
+    min-height: 0;
+    padding: 18px 14px 16px;
+    border-radius: 16px;
+    align-items: flex-start;
+  }
+  .home-categories .category-card .eyebrow,
+  .home-categories .category-icon {
+    display: none;
+  }
+  .home-categories .category-card h3 {
+    font-size: 19px;
+    margin: 0 0 6px;
+  }
+  .home-categories .category-card p {
+    font-size: 13px;
+    line-height: 1.45;
+  }
+  .home-categories .category-link {
+    margin-top: 12px;
+    font-size: 14px;
+  }
+
+  /* ---------- Home: listings as swipeable rows ---------- */
+  .inventory-section .section {
+    padding-block: 30px;
+  }
+  .inventory-section .section-heading {
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 14px;
+    gap: 12px;
+  }
+  .inventory-section .section-heading .eyebrow,
+  .inventory-section .category-description,
+  .inventory-section .mini-title {
+    display: none;
+  }
+  .inventory-section .section-heading .text-link {
+    flex: none;
+    font-size: 14px;
+    min-height: 44px;
+  }
+  .inventory-makes {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin: 0 -18px 14px;
+    padding: 0 18px 4px;
+    scrollbar-width: none;
+  }
+  .inventory-makes::-webkit-scrollbar,
+  .inventory-section .vehicle-grid::-webkit-scrollbar {
+    display: none;
+  }
+  .inventory-makes a {
+    flex: none;
+    min-height: 40px;
+    border-radius: 999px;
+    padding: 8px 14px;
+  }
+  .inventory-section .vehicle-grid {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    margin: 0 -18px;
+    padding: 2px 18px 10px;
+    scroll-padding-inline: 18px;
+    scrollbar-width: none;
+  }
+  .inventory-section .vehicle-grid > * {
+    flex: 0 0 84%;
+    max-width: 340px;
+    scroll-snap-align: start;
+  }
+
+  /* ---------- Home: price check and sell banners ---------- */
+  .visit-banner,
+  .sell-banner {
+    margin-block: 18px;
+    padding: 24px 20px;
+    border-radius: 18px;
+    gap: 18px;
+  }
+  .visit-banner h2,
+  .sell-banner h2 {
+    font-size: 26px;
+    line-height: 1.15;
+  }
+  .visit-banner .btn,
+  .sell-banner .btn {
+    width: 100%;
+    min-height: 52px;
+    justify-content: center;
+    border-radius: 12px;
+  }
+}
+
+@media (max-width: 760px) {
+  /* ---------- Car page ----------
+   * Photo first, then name, price and specs, then the seller's description.
+   * The fixed Call / WhatsApp / Test drive bar lives in floating-contact. */
+  body:has([data-action-bar]) {
+    padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+  }
+  .container.vehicle-detail-page {
+    padding-block: 10px 32px;
+  }
+  .vehicle-detail-page .breadcrumb {
+    margin-bottom: 10px;
+  }
+  .vehicle-detail-page .detail-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+  .vehicle-detail-page .detail-media {
+    display: contents;
+  }
+  .vehicle-detail-page .vehicle-gallery {
+    order: 1;
+    margin: 0 -18px;
+  }
+  .vehicle-detail-page .gallery-main {
+    aspect-ratio: 1.45;
+    border: 0;
+    border-radius: 0;
+  }
+  .vehicle-detail-page .thumbnails {
+    padding: 10px 18px 0;
+    scrollbar-width: none;
+  }
+  .vehicle-detail-page .thumbnails button {
+    width: 72px;
+    height: 54px;
+    border-radius: 8px;
+  }
+  .vehicle-detail-page .vehicle-summary {
+    order: 2;
+    padding: 18px;
+  }
+  .vehicle-detail-page .vehicle-description {
+    order: 3;
+  }
+  .vehicle-detail-page .vehicle-type-tag {
+    font-size: 12px;
+  }
+  .vehicle-detail-page .detail-title {
+    font-size: 28px;
+  }
+  .vehicle-detail-page .detail-price {
+    font-size: 32px;
+  }
+  .vehicle-detail-page .detail-actions .btn {
+    min-height: 52px;
+    border-radius: 12px;
+  }
+  .vehicle-detail-page .section {
+    padding-block: 28px 8px;
+  }
+  .vehicle-detail-page .vehicle-grid {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    margin: 0 -18px;
+    padding: 2px 18px 10px;
+    scroll-padding-inline: 18px;
+    scrollbar-width: none;
+  }
+  .vehicle-detail-page .vehicle-grid > * {
+    flex: 0 0 84%;
+    max-width: 340px;
+    scroll-snap-align: start;
+  }
+}
+
+/* Inventory: phone search/filters bar and bottom sheet (hidden on wider screens). */
+.filter-phone-bar,
+.filter-phone-chips,
+.filter-sheet-close {
+  display: none;
+}
+.filter-sheet-backdrop {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  /* ---------- Cars and commercial lists ---------- */
+  .inventory-page .page-heading {
+    padding-block: 18px 16px;
+  }
+  .inventory-page .page-heading .eyebrow {
+    display: none;
+  }
+  .inventory-page .page-heading h1 {
+    font-size: 30px;
+    margin-bottom: 4px;
+  }
+  .inventory-page .page-heading p {
+    font-size: 15px;
+  }
+  .inventory-categories {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding-top: 14px;
+  }
+  .inventory-categories a {
+    min-height: 46px;
+    padding: 8px 10px;
+    border-radius: 12px;
+    font-size: 14px;
+  }
+  .inventory-layout {
+    gap: 14px;
+    padding-block: 14px 48px;
+  }
+  .inventory-layout .filters {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+  .filter-phone-bar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 10px;
+  }
+  .filter-phone-search,
+  .filter-phone-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 50px;
+    padding: 0 14px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #fff;
+    font-size: 16px;
+  }
+  .filter-phone-search {
+    color: var(--muted);
+    min-width: 0;
+  }
+  .filter-phone-search span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .filter-phone-toggle {
+    color: var(--ink);
+    font-weight: 700;
+  }
+  .filter-phone-count {
+    display: grid;
+    place-items: center;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 6px;
+    border-radius: 999px;
+    background: var(--navy);
+    color: #fff;
+    font-size: 12px;
+  }
+  .filter-phone-chips {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    margin: 10px -18px 0;
+    padding: 0 18px 2px;
+    scrollbar-width: none;
+  }
+  .filter-phone-chips .filter-chip {
+    flex: none;
+    min-height: 38px;
+    border-radius: 999px;
+  }
+
+  /* The form itself becomes the sheet. */
+  .inventory-page .compact-filters .filter-sheet {
+    display: none;
+  }
+  .inventory-page .compact-filters .filter-sheet.is-open {
+    position: fixed;
+    inset: auto 0 0;
+    z-index: 130;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-height: 88dvh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 0 18px;
+    background: #fff;
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -12px 40px #101c2c33;
+    animation: filter-sheet-up 0.22s ease-out;
+  }
+  .inventory-page .compact-filters .filter-sheet .filters-title {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: center;
+    gap: 14px;
+    margin: 0 -18px 14px;
+    padding: 14px 18px 12px;
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+  }
+  .inventory-page .compact-filters .filter-sheet .filters-title h2 {
+    font-size: 18px;
+  }
+  .filter-sheet-close {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--paper);
+  }
+  .inventory-page .compact-filters .filter-sheet .filter-basics,
+  .inventory-page .compact-filters .filter-sheet .filter-extras {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+  }
+  .inventory-page .compact-filters .filter-sheet .more-filters summary {
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+  }
+  .inventory-page .compact-filters .filter-sheet .filter-form-footer {
+    position: sticky;
+    bottom: 0;
+    margin: 12px -18px 0;
+    padding: 12px 18px calc(12px + env(safe-area-inset-bottom, 0px));
+    background: #fff;
+    border-top: 1px solid var(--border);
+  }
+  .inventory-page .compact-filters .filter-sheet .filter-form-footer .btn {
+    width: 100%;
+    min-height: 52px;
+    margin: 0;
+    border-radius: 12px;
+  }
+  .inventory-page .compact-filters .filter-sheet .applied-filters {
+    display: none;
+  }
+  .filter-sheet-backdrop:not([hidden]) {
+    position: fixed;
+    inset: 0;
+    z-index: 129;
+    display: block;
+    background: rgb(16 28 44 / 45%);
+  }
+  .results-toolbar {
+    display: grid;
+    gap: 10px;
+  }
+  .inventory-layout .vehicle-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
+}
+@keyframes filter-sheet-up {
+  from {
+    transform: translateY(24px);
+    opacity: 0.6;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .inventory-page .compact-filters .filter-sheet.is-open {
+    animation: none;
+  }
+}
+
+@media (max-width: 760px) {
+  /* ---------- Compare ----------
+   * Two cars fit the screen side by side; with three, the labels stay pinned
+   * while the table scrolls to the third car. */
+  .comparison {
+    min-width: 0;
+  }
+  .comparison[data-vehicles="3"] {
+    min-width: 560px;
+  }
+  .comparison th:first-child {
+    width: 32%;
+  }
+  .comparison[data-vehicles="3"] th:first-child {
+    width: 128px;
+  }
+  .comparison th,
+  .comparison td {
+    padding: 12px 10px;
+    font-size: 14px;
+  }
+  .comparison thead th {
+    padding-block: 14px;
+    font-size: 15px;
+  }
+  .comparison th[scope="row"],
+  .comparison thead th:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background: #f4f8f6;
+  }
+  .comparison caption {
+    padding: 12px 14px;
+  }
+}
+
+@media (max-width: 760px) {
+  /* ---------- Sitewide: readable small text ----------
+   * The header tagline is 8px on phones; hide it there (the logo carries the
+   * brand). Section labels across pages and modules get a 12px floor. */
+  .header .logo small {
+    display: none;
+  }
+  .logo small {
+    font-size: 11px;
+  }
+  body .eyebrow,
+  body [class*="eyebrow"] {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 760px) {
+  /* ---------- Sitewide: tap targets and form zoom ----------
+   * iOS zooms into any focused field under 16px. Page and module styles load
+   * after this file, so the floor needs !important to hold everywhere. */
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not(
+      [type="file"]
+    ):not([data-display-text]),
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+  input[type="checkbox"],
+  input[type="radio"] {
+    width: 22px;
+    height: 22px;
+    flex: none;
+  }
+  .mobile-toggle,
+  .account-button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  .announcement-links a {
+    min-height: 32px;
+  }
+  .breadcrumb a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 36px;
+  }
+  .inventory-makes a {
+    min-height: 44px;
+  }
+  body .valuation-privacy,
+  body .valuation-data-note,
+  .field small {
+    font-size: 13px;
+  }
+  body [class*="editorial-guide_number"] {
+    font-size: 12px;
+  }
+}
+
+/* Admin: the section toggle is phone-only; desktop keeps the full side list. */
+.side-nav-toggle {
+  display: none;
+}
+.side-nav-links {
+  display: contents;
+}
+
+@media (max-width: 760px) {
+  /* ---------- Admin: section menu ---------- */
+  .account-layout {
+    gap: 14px;
+  }
+  .side-nav.admin-nav {
+    display: block;
+    overflow: visible;
+  }
+  .side-nav-toggle {
+    display: grid;
+    grid-template-columns: auto auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    min-height: 52px;
+    padding: 0 14px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #fff;
+    color: var(--ink);
+    font-size: 14px;
+    text-align: left;
+  }
+  .side-nav-toggle span {
+    color: var(--muted);
+  }
+  .side-nav-toggle strong {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 15px;
+  }
+  .side-nav-toggle[aria-expanded="true"] svg:last-child {
+    transform: rotate(180deg);
+  }
+  .admin-nav .side-nav-links {
+    display: none;
+  }
+  .admin-nav[data-open="true"] .side-nav-links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+    margin-top: 8px;
+    padding: 8px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #fff;
+  }
+  .admin-nav .side-nav-links a {
+    min-height: 46px;
+    padding: 8px 10px;
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 1.25;
+    white-space: normal;
+  }
+
+  /* ---------- Admin: tables become labelled cards ---------- */
+  .table-wrap:has(> .admin-table) {
+    overflow: visible;
+    border: 0;
+    background: transparent;
+  }
+  .admin-table,
+  .admin-table tbody,
+  .admin-table tr,
+  .admin-table td {
+    display: block;
+    width: 100%;
+  }
+  .admin-table {
+    min-width: 0;
+  }
+  .admin-table thead {
+    display: none;
+  }
+  .admin-table tbody {
+    display: grid;
+    gap: 10px;
+  }
+  .admin-table tr {
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: #fff;
+  }
+  .admin-table td {
+    padding: 6px 0;
+    border: 0;
+    font-size: 15px;
+    overflow-wrap: anywhere;
+  }
+  .admin-table td:first-child {
+    padding-top: 0;
+    font-size: 16px;
+  }
+  .admin-table td:first-child strong {
+    display: block;
+    font-size: 17px;
+  }
+  .admin-table td[data-label] {
+    position: relative;
+    padding-left: 106px;
+    min-height: 32px;
+  }
+  .admin-table td[data-label]::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 96px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.3;
+  }
+  .admin-table td.admin-table-action {
+    margin-top: 8px;
+    padding: 10px 0 0;
+    border-top: 1px solid var(--border);
+  }
+  .admin-table td.admin-table-action > * {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 44px;
+    font-weight: 700;
+  }
+
+  /* ---------- Admin: headings, filters and the footer ---------- */
+  .admin-heading {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .admin-heading h1 {
+    font-size: 28px;
+  }
+  .account-layout form.toolbar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .account-layout form.toolbar > :first-child,
+  .account-layout form.toolbar .search-input {
+    grid-column: 1 / -1;
+  }
+  .account-layout form.toolbar .btn {
+    min-height: 48px;
+  }
+  .account-layout
+    form.toolbar
+    input:not([type="checkbox"]):not([type="radio"]) {
+    min-height: 48px;
+    padding: 0 14px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #fff;
+  }
+  /* Staff pages keep the contact strip and legal links, not the marketing. */
+  body:has(.admin-nav)
+    footer[aria-label="NCR Wheelz footer"]
+    [class*="invitation"],
+  body:has(.admin-nav) footer[aria-label="NCR Wheelz footer"] [class*="grid"] {
+    display: none;
+  }
+}

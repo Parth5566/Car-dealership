@@ -1,0 +1,698 @@
+.page {
+  background: #f5f7f7;
+}
+.hero {
+  background: linear-gradient(115deg, #e8f0ec, #f5f2e7);
+  border-bottom: 1px solid #dde7e1;
+  overflow: hidden;
+}
+.heroGrid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 50px;
+  align-items: center;
+  padding-block: 47px 50px;
+}
+.eyebrow {
+  display: inline-block;
+  color: #8c6c36;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+.hero h1 {
+  color: #1b3f47;
+  font-size: clamp(35px, 4vw, 53px);
+  font-weight: 600;
+  line-height: 1.08;
+  margin-top: 16px;
+  letter-spacing: -0.04em;
+}
+.hero h1 em {
+  color: #467568;
+  font-style: normal;
+}
+.hero p {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #5b706d;
+  max-width: 500px;
+  margin-top: 19px;
+}
+.heroActions {
+  display: flex;
+  gap: 25px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 25px;
+}
+.primary {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 12px 18px;
+  background: #24565a;
+  color: #fff;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 650;
+}
+.primary:hover {
+  background: #173f46;
+}
+.visitLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #315e59;
+  border-bottom: 1px solid #a1b7aa;
+  padding-block: 6px;
+}
+.heroArt {
+  position: relative;
+  width: 100%;
+  max-width: 350px;
+  height: 270px;
+  margin-inline: auto;
+}
+.orbit {
+  position: absolute;
+  width: 260px;
+  height: 220px;
+  border: 1px dashed #76978b66;
+  border-radius: 50%;
+  transform: rotate(-25deg);
+  left: 30px;
+  top: 25px;
+}
+.chatCard {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: #24565a;
+  color: #edf5ed;
+  padding: 24px;
+  border-radius: 18px;
+  left: 0;
+  top: 40px;
+  transform: rotate(-6deg);
+  box-shadow: 0 14px 30px #214a4d12;
+}
+.chatCard span {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.6;
+}
+.carCard {
+  position: absolute;
+  right: 5px;
+  bottom: 8px;
+  width: 195px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  background: #ebc98d;
+  color: #21474c;
+  padding: 20px;
+  border-radius: 20px;
+  transform: rotate(7deg);
+  border: 1px solid #d6b97e;
+  box-shadow: 0 16px 25px #234e3e0a;
+}
+.carCard span {
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+}
+.pin {
+  position: absolute;
+  right: 22px;
+  top: 6px;
+  width: 53px;
+  height: 53px;
+  border: 1px solid #c2d7c9;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #4b7967;
+  background: #edf5ed;
+}
+.smallDot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #c6a66a;
+  left: 28px;
+  bottom: 20px;
+}
+.contactLayout {
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: 36px;
+  padding-block: 46px;
+  align-items: start;
+}
+.contactDetails {
+  padding-top: 9px;
+  min-width: 0;
+}
+.sectionHeading h2 {
+  color: #21454c;
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-top: 12px;
+}
+.sectionHeading p {
+  color: #607470;
+  font-size: 15px;
+  line-height: 1.75;
+  margin-top: 13px;
+  max-width: 430px;
+}
+.methods {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+  margin-top: 25px;
+}
+.method {
+  background: #fff;
+  border: 1px solid #dce6e2;
+  border-radius: 14px;
+  padding: 22px 19px;
+  min-width: 0;
+}
+.method:last-child:nth-child(odd) {
+  grid-column: 1/-1;
+}
+.methodIcon {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 43px;
+  height: 43px;
+  border-radius: 11px;
+  color: #326a61;
+  background: #edf4ef;
+  margin-bottom: 18px;
+}
+.method:nth-child(2n) .methodIcon {
+  background: #faf2e1;
+  color: #927039;
+}
+.method h3 {
+  color: #25474f;
+  font-size: 15px;
+  font-weight: 650;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+.values {
+  display: grid;
+  gap: 5px;
+  color: #254b50;
+  font-size: 16px;
+  line-height: 1.65;
+  font-weight: 550;
+}
+.values a,
+.values span {
+  overflow-wrap: anywhere;
+}
+.values a:hover {
+  color: #8f682d;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.method p {
+  color: #647570;
+  font-size: 12px;
+  line-height: 1.75;
+  margin-top: 10px;
+}
+.cardLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #3c7265;
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 13px;
+}
+.cardLink:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.whatsapp,
+.instagram {
+  grid-column: 1/-1;
+  display: flex;
+  gap: 17px;
+  align-items: center;
+  flex-wrap: wrap;
+  background: #eef5ef;
+}
+.instagram {
+  background: #f8f1ee;
+}
+.whatsapp .methodIcon,
+.instagram .methodIcon {
+  margin: 0;
+}
+.whatsapp h3,
+.instagram h3 {
+  margin-bottom: 0;
+}
+.whatsapp p,
+.instagram p {
+  margin-top: 5px;
+}
+.whatsapp .cardLink,
+.instagram .cardLink {
+  margin-top: 0;
+  margin-left: auto;
+}
+.visitNote {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 21px;
+  background: #faf5e9;
+  border: 1px solid #ece1c9;
+  border-radius: 13px;
+  margin-top: 18px;
+  color: #8d713b;
+}
+.visitNote h3 {
+  color: #665431;
+  font-size: 15px;
+  line-height: 1.4;
+  font-weight: 600;
+}
+.visitNote p {
+  font-size: 13px;
+  line-height: 1.8;
+  color: #796e57;
+  margin-top: 8px;
+}
+.formPanel {
+  min-width: 0;
+  background: #fff;
+  border: 1px solid #dae5e0;
+  border-radius: 20px;
+  padding: 31px;
+  box-shadow: 0 14px 38px #214a3a07;
+  scroll-margin-top: 118px;
+}
+.formTitle {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+.formTitle > span {
+  width: 49px;
+  height: 49px;
+  display: grid;
+  place-items: center;
+  background: #f8efdd;
+  color: #96723a;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+.formTitle .eyebrow {
+  font-size: 10px;
+}
+.formTitle h2 {
+  font-size: 27px;
+  font-weight: 600;
+  color: #23494f;
+  margin-top: 7px;
+  line-height: 1.25;
+}
+.formIntro {
+  font-size: 14px;
+  color: #667974;
+  line-height: 1.8;
+  margin: 19px 0 24px;
+}
+.formPanel :global(.form-grid) {
+  gap: 17px 15px;
+}
+.formPanel :global(.field) {
+  margin-bottom: 0;
+}
+.formPanel :global(.form-grid > .field:nth-child(3)) {
+  grid-column: 1/-1;
+}
+.formPanel :global(.field > span) {
+  font-size: 14px;
+  font-weight: 600;
+  color: #345159;
+  margin-bottom: 8px;
+}
+.formPanel :global(.field small) {
+  font-size: 12px;
+  line-height: 1.6;
+  color: #6b7c75;
+}
+.formPanel input:not([type="checkbox"]),
+.formPanel textarea {
+  background: #fcfdfb;
+  border: 1px solid #d9e2de;
+  border-radius: 8px;
+  font-size: 15px;
+  padding: 12px 13px;
+  color: #243d46;
+}
+.formPanel input:not([type="checkbox"]) {
+  min-height: 47px;
+}
+.formPanel textarea {
+  min-height: 133px;
+  resize: vertical;
+}
+.formPanel :global(.check-label) {
+  font-size: 12px;
+  line-height: 1.75;
+  align-items: flex-start;
+  gap: 10px;
+  margin-block: 20px;
+}
+.formPanel :global(.check-label input) {
+  margin-top: 4px;
+  accent-color: #24565a;
+}
+.formPanel form > button[type="submit"] {
+  width: 100%;
+  font-size: 14px;
+  background: #24565a;
+  border-radius: 8px;
+  min-height: 48px;
+}
+.formPanel form > button[type="submit"]:hover {
+  background: #173f46;
+}
+.formPanel form > :global(.subtle) {
+  font-size: 12px;
+  line-height: 1.7;
+  color: #687b74;
+}
+.visit {
+  padding-bottom: 14px;
+  scroll-margin-top: 118px;
+}
+.visitCard {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  border: 1px solid #dae5df;
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+}
+.visitCopy {
+  padding: 35px;
+}
+.visitCopy h2 {
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #24484d;
+  margin-top: 13px;
+}
+.visitCopy > p {
+  color: #627771;
+  font-size: 14px;
+  line-height: 1.8;
+  margin-top: 17px;
+}
+.visitCopy address {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-style: normal;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #315c57;
+  margin-top: 25px;
+}
+.visitCopy address svg {
+  margin-top: 3px;
+}
+.visitCopy .visitHours {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+}
+.visitCopy .visitReminder {
+  font-size: 12px;
+  color: #71817a;
+  margin-top: 17px;
+}
+.visitCopy .primary {
+  margin-top: 22px;
+  font-size: 13px;
+}
+.map {
+  width: 100%;
+  height: 100%;
+  min-height: 390px;
+  border: 0;
+  background: #e5eeea;
+}
+.noMap {
+  grid-template-columns: 1fr;
+}
+@media (max-width: 1050px) {
+  .heroGrid {
+    gap: 25px;
+  }
+  .heroArt {
+    transform: scale(0.9);
+  }
+  .contactLayout {
+    grid-template-columns: 1fr 1.1fr;
+    gap: 24px;
+  }
+  .methods {
+    grid-template-columns: 1fr;
+    gap: 13px;
+  }
+  .method {
+    padding: 20px;
+  }
+  .methodIcon {
+    width: 37px;
+    height: 37px;
+    margin-bottom: 12px;
+  }
+  .formPanel {
+    padding: 26px;
+  }
+  .visitCopy {
+    padding: 29px;
+  }
+}
+@media (max-width: 800px) {
+  .heroGrid {
+    grid-template-columns: 1fr;
+    padding-block: 35px;
+  }
+  .heroArt {
+    display: none;
+  }
+  .hero h1 {
+    font-size: 43px;
+  }
+  .hero p {
+    max-width: 600px;
+  }
+  .contactLayout {
+    grid-template-columns: 1fr;
+    padding-block: 34px;
+    gap: 28px;
+  }
+  .methods {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .sectionHeading h2 {
+    font-size: 28px;
+  }
+  .visitCard {
+    grid-template-columns: 1fr;
+  }
+  .map {
+    height: 300px;
+    min-height: 0;
+  }
+  .visitCopy {
+    padding: 29px;
+  }
+}
+@media (max-width: 480px) {
+  .heroGrid {
+    padding-block: 32px;
+  }
+  .eyebrow {
+    font-size: 10px;
+  }
+  .hero h1 {
+    font-size: 36px;
+  }
+  .hero p {
+    font-size: 15px;
+  }
+  .heroActions {
+    gap: 19px;
+    margin-top: 22px;
+  }
+  .primary,
+  .visitLink {
+    font-size: 13px;
+  }
+  .contactLayout {
+    padding-top: 27px;
+  }
+  .methods {
+    gap: 12px;
+  }
+  .method {
+    padding: 18px 15px;
+  }
+  .method h3 {
+    font-size: 14px;
+  }
+  .values {
+    font-size: 14px;
+  }
+  .method p {
+    font-size: 11px;
+  }
+  .methodIcon {
+    width: 35px;
+    height: 35px;
+  }
+  .formPanel {
+    padding: 24px 20px;
+    border-radius: 15px;
+  }
+  .formTitle {
+    gap: 11px;
+  }
+  .formTitle > span {
+    width: 42px;
+    height: 42px;
+  }
+  .formTitle h2 {
+    font-size: 24px;
+  }
+  .formTitle .eyebrow {
+    font-size: 9px;
+  }
+  .formPanel :global(.form-grid) {
+    grid-template-columns: 1fr;
+  }
+  .visitNote {
+    padding: 18px;
+  }
+  .visitCopy {
+    padding: 24px;
+  }
+  .visitCopy h2 {
+    font-size: 27px;
+  }
+  .visitCopy address {
+    font-size: 14px;
+  }
+  .visitCopy .primary {
+    width: 100%;
+  }
+  .map {
+    height: 270px;
+  }
+}
+/* Phone: contact options as compact full-width rows (icon beside the details),
+   so the email never breaks mid-word and the form starts about a screen sooner. */
+@media (max-width: 760px) {
+  .heroActions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+  .heroActions .primary {
+    justify-content: center;
+    min-height: 52px;
+    font-size: 16px;
+  }
+  .heroActions .visitLink {
+    justify-self: center;
+    min-height: 44px;
+    font-size: 15px;
+  }
+  .eyebrow,
+  .formTitle .eyebrow {
+    font-size: 12px;
+  }
+  .methods {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+  .method,
+  .whatsapp,
+  .instagram {
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr);
+    column-gap: 14px;
+    row-gap: 2px;
+    align-items: start;
+    padding: 16px;
+  }
+  .method > *:not(.methodIcon) {
+    grid-column: 2;
+  }
+  .methodIcon {
+    grid-row: span 4;
+    width: 42px;
+    height: 42px;
+    margin: 0;
+  }
+  .method h3 {
+    margin-bottom: 2px;
+    font-size: 15px;
+  }
+  .values {
+    font-size: 16px;
+  }
+  .values a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+  }
+  .method p {
+    margin-top: 2px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .cardLink,
+  .whatsapp .cardLink,
+  .instagram .cardLink {
+    min-height: 40px;
+    margin: 4px 0 0;
+    font-size: 14px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .primary,
+  .cardLink,
+  .visitLink {
+    transition: none;
+  }
+}

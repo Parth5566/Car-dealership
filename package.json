@@ -1,0 +1,39 @@
+{
+  "name": "ncr-wheelz",
+  "private": true,
+  "scripts": {
+    "install:all": "npm --prefix backend ci && npm --prefix frontend ci",
+    "dev": "node scripts/dev.mjs",
+    "build": "npm --prefix frontend run build",
+    "test": "npm --prefix backend test && node --experimental-strip-types --experimental-vm-modules --test frontend/tests/calculations.test.mjs frontend/tests/client-regressions.test.mjs frontend/tests/form-regressions.test.mjs frontend/tests/seo.test.mjs",
+    "test:integration": "npm --prefix backend run test:integration",
+    "test:e2e": "node scripts/run-e2e.mjs",
+    "test:browser": "node scripts/run-e2e.mjs --browser",
+    "test:browser:list": "node scripts/run-e2e.mjs --browser --list",
+    "db:inspect": "npm --prefix backend run db:inspect",
+    "db:migrate": "npm --prefix backend run db:migrate",
+    "samples:plan": "node backend/scripts/sample-inventory.js plan",
+    "samples:add": "node backend/scripts/sample-inventory.js add",
+    "samples:archive": "node backend/scripts/sample-inventory.js archive",
+    "blog:sample": "node backend/scripts/sample-blog.js add",
+    "blog:sample:plan": "node backend/scripts/sample-blog.js plan",
+    "admin:create": "npm --prefix backend run admin:create",
+    "valuation:verify": "node backend/scripts/verify-scrappa.js",
+    "typecheck": "npm --prefix frontend run typecheck",
+    "format": "prettier --write \"{backend,frontend,scripts}/**/*.{js,mjs,ts,tsx,css}\" \"*.json\" \"docs/*.md\" README.md",
+    "format:check": "prettier --check \"{backend,frontend,scripts}/**/*.{js,mjs,ts,tsx,css}\" \"*.json\" \"docs/*.md\" README.md",
+    "qa:browser": "node backend/scripts/e2e-environment.js",
+    "test:seo": "node --test frontend/tests/seo.test.mjs",
+    "email:verify": "node backend/scripts/email.js verify",
+    "email:status": "node backend/scripts/email.js status",
+    "email:retry": "node backend/scripts/email.js retry",
+    "email:drain": "node backend/scripts/email.js drain",
+    "email:setup": "node backend/scripts/email.js setup"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "prettier": "^3.9.10"
+  }
+}

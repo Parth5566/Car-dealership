@@ -1,0 +1,19 @@
+@media (min-width: 761px) {
+  .commercialButton {
+    display: inline-flex;
+    justify-content: center;
+    min-height: 50px;
+    padding: 14px 22px;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    background: var(--gold);
+    color: var(--navy);
+    font-weight: 700;
+    line-height: 1.5;
+    white-space: normal;
+  }
+
+  .commercialButton:hover {
+    background: #e5bb76;
+  }
+}

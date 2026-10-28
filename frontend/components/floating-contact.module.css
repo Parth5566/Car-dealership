@@ -1,0 +1,130 @@
+.button {
+  position: fixed;
+  /* The comparison tray publishes its height so the buttons sit above it. */
+  bottom: calc(24px + var(--compare-tray-offset, 0px));
+  z-index: 45;
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  color: white;
+  box-shadow:
+    0 8px 24px #101c2c33,
+    0 2px 6px #101c2c26;
+  transition:
+    bottom 0.2s ease,
+    transform 0.18s ease,
+    background 0.18s ease;
+}
+.whatsapp {
+  right: 24px;
+  background: #25d366;
+}
+.call {
+  left: 24px;
+  background: #245b66;
+}
+.button:hover {
+  transform: translateY(-2px);
+}
+.whatsapp:hover {
+  background: #1ebe5b;
+}
+.call:hover {
+  background: #173f48;
+}
+.button:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+}
+@media (max-width: 760px) {
+  .button {
+    bottom: calc(16px + var(--compare-tray-offset, 0px));
+    width: 54px;
+    height: 54px;
+  }
+  .whatsapp {
+    right: 16px;
+  }
+  .call {
+    left: 16px;
+  }
+  .button {
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease,
+      bottom 0.2s ease,
+      visibility 0s;
+  }
+  .button[data-revealed="false"] {
+    opacity: 0;
+    transform: translateY(14px) scale(0.92);
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease,
+      visibility 0s linear 0.2s;
+  }
+}
+/* Vehicle pages on phones: a fixed action bar replaces the two circles. */
+.bar {
+  display: none;
+}
+@media (max-width: 760px) {
+  .onListing {
+    display: none;
+  }
+  .bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: var(--compare-tray-offset, 0px);
+    z-index: 46;
+    display: grid;
+    grid-template-columns: auto auto minmax(0, 1fr);
+    gap: 8px;
+    padding: 10px max(12px, env(safe-area-inset-right, 0px))
+      calc(10px + env(safe-area-inset-bottom, 0px))
+      max(12px, env(safe-area-inset-left, 0px));
+    background: #fff;
+    border-top: 1px solid #dfe5e8;
+    box-shadow: 0 -8px 24px #101c2c14;
+  }
+  .barButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 50px;
+    padding: 0 14px;
+    border-radius: 12px;
+    border: 1px solid #cfd9dc;
+    background: #fff;
+    color: #173f48;
+    font-size: 15px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .barWhatsApp {
+    color: #128c4b;
+    border-color: #bfe6cd;
+    background: #effaf3;
+  }
+  .barPrimary {
+    border-color: var(--gold);
+    background: var(--gold);
+    color: #142231;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition: none;
+  }
+}
+@media print {
+  .button {
+    display: none;
+  }
+}

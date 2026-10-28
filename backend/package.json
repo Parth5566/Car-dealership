@@ -1,0 +1,35 @@
+{
+  "name": "ncr-wheelz-api",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node --test tests/unit.test.js tests/regressions.test.js tests/samples.test.js tests/database.test.js tests/offers.test.js tests/blog.test.js tests/valuation.test.js tests/scrappa.test.js tests/indexnow.test.js tests/email.test.js tests/qa-web.test.js",
+    "test:integration": "node --test --test-concurrency=1 tests/integration.test.js",
+    "db:inspect": "node scripts/database.js inspect",
+    "db:migrate": "node scripts/database.js migrate",
+    "db:seed": "node scripts/seed.js",
+    "admin:create": "node scripts/create-admin.js",
+    "password:reset-link": "node scripts/reset-link.js",
+    "qa:browser": "node scripts/e2e-environment.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
+    "express-rate-limit": "^8.1.0",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^2.5.0",
+    "mysql2": "^3.15.3",
+    "sharp": "^0.35.5",
+    "zod": "^4.1.12",
+    "nodemailer": "10.2.1"
+  },
+  "devDependencies": {
+    "supertest": "^7.1.4"
+  }
+}

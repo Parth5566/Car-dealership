@@ -1,0 +1,83 @@
+CREATE TABLE IF NOT EXISTS nw_users (
+ id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY, name VARCHAR(100) NOT NULL, email VARCHAR(254) NOT NULL UNIQUE,
+ phone VARCHAR(25) NOT NULL DEFAULT '', password_hash VARCHAR(255) NOT NULL,
+ role ENUM('customer','sales','reviewer','admin') NOT NULL DEFAULT 'customer', active BOOLEAN NOT NULL DEFAULT TRUE,
+ token_version INT NOT NULL DEFAULT 0, consent_at DATETIME NOT NULL,
+ created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+CREATE TABLE IF NOT EXISTS nw_sessions (
+ id CHAR(36) PRIMARY KEY, user_id BIGINT UNSIGNED NOT NULL, family CHAR(36) NOT NULL,
+ token_hash CHAR(64) NOT NULL UNIQUE, expires_at DATETIME NOT NULL, revoked_at DATETIME NULL,
+ created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, INDEX(user_id), INDEX(family),
+ FOREIGN KEY (user_id) REFERENCES nw_users(id)
+) ENGINE=InnoDB;
+CREATE TABLE IF NOT EXISTS nw_resets (
+ id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY, user_id BIGINT UNSIGNED NOT NULL, token_hash CHAR(64) NOT NULL UNIQUE,
+ expires_at DATETIME NOT NULL, used_at DATETIME NULL, FOREIGN KEY(user_id) REFERENCES nw_users(id)
+) ENGINE=InnoDB;
+CREATE TABLE IF NOT EXISTS nw_submissions (
+ id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY, seller_id BIGINT UNSIGNED NOT NULL,
+ type ENUM('passenger','commercial') NOT NULL, data JSON NOT NULL, seller_contact JSON NOT NULL,
+ status ENUM('draft','submitted','under_review','information_required','approved','published','rejected','sold','archived') NOT NULL DEFAULT 'draft',
+ review_note TEXT NULL, consent_at DATETIME NULL, submitted_at DATETIME NULL, approved_by BIGINT UNSIGNED NULL,
+ created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+ FOREIGN KEY(seller_id) REFERENCES nw_users(id), FOREIGN KEY(approved_by) REFERENCES nw_users(id), INDEX(status), INDEX(seller_id)
+) ENGINE=InnoDB;
+CREATE TABLE IF NOT EXISTS nw_vehicles (
+ id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY, submission_id BIGINT UNSIGNED NULL UNIQUE,
+ type ENUM('passenger','commercial') NOT NULL, make VARCHAR(80) NOT NULL, model VARCHAR(100) NOT NULL,
+ year SMALLINT NOT NULL, price DECIMAL(12,2) NOT NULL, mileage INT UNSIGNED NOT NULL,
+ fuel VARCHAR(30) NOT NULL, transmission VARCHAR(30) NOT NULL, location VARCHAR(120) NOT NULL, body_type VARCHAR(80) NOT NULL,
+ payload_kg DECIMAL(10,2) NULL, slug VARCHAR(255) NOT NULL,
+ status ENUM('draft','published','reserved','sold','archived') NOT NULL DEFAULT 'draft', approved BOOLEAN NOT NULL DEFAULT FALSE,
+ featured BOOLEAN NOT NULL DEFAULT FALSE, data JSON NOT NULL, views INT UNSIGNED NOT NULL DEFAULT 0,
+ created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+ FOREIGN KEY(submission_id) REFERENCES nw_submissions(id), INDEX(type,status,approved), INDEX(price), INDEX(created_at)
+) ENGINE=InnoDB;
+CREATE TABLE IF NOT EXISTS nw_images (
+ id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY, vehicle_id BIGINT UNSIGNED NULL, submission_id BIGINT UNSIGNED NULL,
+ storage_key VARCHAR(100) NOT NULL, alt_text VARCHAR(200) NOT NULL, sort_order INT NOT NULL DEFAULT 0,
+ created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ FOREIGN KEY(vehicle_id) REFERENCES nw_vehicles(id), FOREIGN KEY(submission_id) REFERENCES nw_submissions(id)
+) ENGINE=InnoDB;
+CREATE TABLE IF NOT EXISTS nw_documents (
+ id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY, submission_id BIGINT UNSIGNED NOT NULL, type VARCHAR(60) NOT NULL,
+ storage_key VARCHAR(100) NOT NULL, mime VARCHAR(60) NOT NULL, size_bytes INT NOT NULL,
+ status ENUM('pending','accepted','rejected') NOT NULL DEFAULT 'pending', review_note TEXT NULL, reviewed_by BIGINT UNSIGNED NULL,
+ created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+ UNIQUE(submission_id,type), FOREIGN KEY(submission_id) REFERENCES nw_submissions(id), FOREIGN KEY(reviewed_by) REFERENCES nw_users(id)
+) ENGINE=InnoDB;
+CREATE TABLE IF NOT EXISTS nw_leads (
+ id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY, vehicle_id BIGINT UNSIGNED NULL, user_id BIGINT UNSIGNED NULL,
+ name VARCHAR(100) NOT NULL, email VARCHAR(254) NOT NULL, phone VARCHAR(25) NOT NULL, message TEXT NOT NULL,
+ source VARCHAR(200) NOT NULL DEFAULT 'contact', status ENUM('new','contacted','test_drive','negotiation','sold','lost') NOT NULL DEFAULT 'new',
+ assigned_to BIGINT UNSIGNED NULL, internal_note TEXT NULL,
+ created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+ FOREIGN KEY(vehicle_id) REFERENCES nw_vehicles(id), FOREIGN KEY(user_id) REFERENCES nw_users(id), FOREIGN KEY(assigned_to) REFERENCES nw_users(id), INDEX(status), INDEX(user_id)
+) ENGINE=InnoDB;
+CREATE TABLE IF NOT EXISTS nw_test_drives (
+ id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY, vehicle_id BIGINT UNSIGNED NOT NULL, user_id BIGINT UNSIGNED NOT NULL,
+ name VARCHAR(100) NOT NULL, email VARCHAR(254) NOT NULL, phone VARCHAR(25) NOT NULL, preferred_at DATETIME NOT NULL, notes TEXT NOT NULL,
+ status ENUM('requested','confirmed','rescheduled','completed','cancelled') NOT NULL DEFAULT 'requested',
+ confirmed_at DATETIME NULL, internal_note TEXT NULL,
+ created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+ FOREIGN KEY(vehicle_id) REFERENCES nw_vehicles(id), FOREIGN KEY(user_id) REFERENCES nw_users(id), INDEX(status), INDEX(user_id)
+) ENGINE=InnoDB;
+CREATE TABLE IF NOT EXISTS nw_favourites (
+ user_id BIGINT UNSIGNED NOT NULL, vehicle_id BIGINT UNSIGNED NOT NULL, created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ PRIMARY KEY(user_id,vehicle_id), FOREIGN KEY(user_id) REFERENCES nw_users(id), FOREIGN KEY(vehicle_id) REFERENCES nw_vehicles(id)
+) ENGINE=InnoDB;
+CREATE TABLE IF NOT EXISTS nw_history (
+ id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY, entity_type VARCHAR(30) NOT NULL, entity_id BIGINT UNSIGNED NOT NULL,
+ status VARCHAR(40) NOT NULL, actor_id BIGINT UNSIGNED NULL, note TEXT NOT NULL,
+ created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, INDEX(entity_type,entity_id), FOREIGN KEY(actor_id) REFERENCES nw_users(id)
+) ENGINE=InnoDB;
+CREATE TABLE IF NOT EXISTS nw_audit (
+ id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY, actor_id BIGINT UNSIGNED NULL, action VARCHAR(100) NOT NULL,
+ target_type VARCHAR(40) NOT NULL, target_id VARCHAR(80) NOT NULL, metadata JSON NOT NULL,
+ created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, INDEX(created_at), INDEX(action), FOREIGN KEY(actor_id) REFERENCES nw_users(id)
+) ENGINE=InnoDB;
+CREATE TABLE IF NOT EXISTS nw_settings (
+ id TINYINT PRIMARY KEY, data JSON NOT NULL, updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+INSERT IGNORE INTO nw_settings(id,data) VALUES (1,JSON_OBJECT('business_name','NCR Wheelz','email','','phone','','whatsapp','','address','','about','NCR Wheelz connects buyers and sellers of used passenger and commercial vehicles in Delhi NCR.','home_headline','Your next chapter. Your next drive.'));

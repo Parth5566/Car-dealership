@@ -1,0 +1,265 @@
+.section {
+  padding-block: 64px 68px;
+  background: #fff;
+  border-block: 1px solid #e6ece8;
+}
+.heading {
+  text-align: center;
+  margin-bottom: 32px;
+}
+.eyebrow {
+  color: #58776d;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-top: 12px;
+}
+.titleRow > span {
+  flex: 1;
+  height: 1px;
+  background: #dce6df;
+}
+.titleRow h2 {
+  color: #193b42;
+  font-size: clamp(25px, 2.5vw, 33px);
+  line-height: 1.22;
+  max-width: 660px;
+}
+.heading > p {
+  color: #697b76;
+  font-size: 15px;
+  margin-top: 12px;
+}
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  list-style: none;
+  padding: 4px;
+  margin: -4px;
+}
+.cards li {
+  min-width: 0;
+}
+.card {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  height: 100%;
+  min-height: 236px;
+  align-items: center;
+  gap: 12px;
+  padding: 26px 18px;
+  border-radius: 20px;
+  color: #193b42;
+  overflow: hidden;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+.card::before {
+  content: "";
+  z-index: -1;
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  border: 1px solid #ffffff70;
+  border-radius: 50%;
+  right: -65px;
+  top: -75px;
+  box-shadow: 0 0 0 18px #ffffff24;
+}
+.compare {
+  background: #e2efe7;
+}
+.value {
+  background: #fbefd6;
+}
+.drive {
+  background: #dcece9;
+}
+.help {
+  background: #f2e9da;
+}
+.art {
+  width: 92px;
+  flex-shrink: 0;
+}
+.illustration {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform 0.2s;
+}
+.copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+}
+.metric {
+  font-size: clamp(27px, 2.4vw, 34px);
+  font-weight: 750;
+  letter-spacing: -0.045em;
+  line-height: 1.15;
+  margin-bottom: 10px;
+}
+.copy h3 {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+}
+.description {
+  font-size: 13px;
+  line-height: 1.55;
+  margin-top: 7px;
+  color: #456259;
+}
+.action {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 16px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.5;
+  border-bottom: 1px solid #7f9a8f70;
+  padding-bottom: 3px;
+}
+.card:focus-visible {
+  outline-color: #94703c;
+}
+.swipe {
+  display: none;
+}
+@media (hover: hover) {
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px #193b4210;
+  }
+  .card:hover .illustration {
+    transform: rotate(-4deg);
+  }
+}
+@media (max-width: 1240px) {
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .card {
+    min-height: 210px;
+    padding: 28px;
+    gap: 22px;
+  }
+  .art {
+    width: 114px;
+  }
+  .metric {
+    font-size: 32px;
+  }
+  .copy h3 {
+    font-size: 16px;
+  }
+  .description {
+    font-size: 14px;
+  }
+  .action {
+    font-size: 13px;
+  }
+}
+@media (min-width: 651px) and (max-width: 900px) {
+  .card {
+    padding: 22px;
+    gap: 16px;
+  }
+  .art {
+    width: 92px;
+  }
+  .metric {
+    font-size: 29px;
+  }
+}
+@media (max-width: 650px) {
+  .section {
+    padding-block: 42px 32px;
+  }
+  .heading {
+    margin-bottom: 23px;
+  }
+  .titleRow {
+    gap: 12px;
+  }
+  .titleRow > span {
+    display: none;
+  }
+  .titleRow h2 {
+    margin-inline: auto;
+    max-width: 310px;
+    font-size: 27px;
+  }
+  .heading > p {
+    font-size: 14px;
+    max-width: 280px;
+    margin-inline: auto;
+  }
+  .cards {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    padding-bottom: 12px;
+    scrollbar-width: thin;
+    scrollbar-color: #a9c0b5 transparent;
+  }
+  .cards li {
+    flex: 0 0 89%;
+    min-width: 280px;
+    scroll-snap-align: start;
+  }
+  .card {
+    min-height: 226px;
+    padding: 24px 20px;
+    gap: 14px;
+    border-radius: 17px;
+  }
+  .art {
+    width: 92px;
+  }
+  .metric {
+    font-size: 29px;
+  }
+  .copy h3 {
+    font-size: 15px;
+  }
+  .description {
+    font-size: 13px;
+  }
+  .action {
+    font-size: 12px;
+  }
+  .swipe {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #58776d;
+    margin-top: 11px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .illustration {
+    transition: none;
+  }
+  .card:hover,
+  .card:hover .illustration {
+    transform: none;
+  }
+}

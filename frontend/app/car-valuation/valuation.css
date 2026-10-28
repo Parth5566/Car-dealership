@@ -1,0 +1,683 @@
+.valuation-page {
+  background: #fff;
+  padding: 0 0 64px;
+  color: #263238;
+}
+.valuation-content {
+  max-width: 1040px;
+}
+.valuation-breadcrumb {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  color: #6e757b;
+  font-size: 12px;
+  padding-top: 24px;
+}
+.valuation-breadcrumb a {
+  color: #496d74;
+}
+.valuation-heading {
+  padding: 24px 0 26px;
+}
+.valuation-heading h1 {
+  color: #24323d;
+  font-size: clamp(27px, 3vw, 34px);
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+  margin: 0 0 9px;
+}
+.valuation-heading p {
+  font-size: 15px;
+  color: #626e75;
+  line-height: 1.6;
+  max-width: 750px;
+}
+.valuation-calculator {
+  background: #fff;
+  border: 1px solid #dde2e5;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.valuation-calculator-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 24px 30px;
+  border-bottom: 1px solid #e8ecee;
+  background: #fcfdfd;
+}
+.valuation-calculator-title h2 {
+  font-size: 21px;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  color: #263a44;
+  margin-bottom: 5px;
+}
+.valuation-calculator-title p {
+  font-size: 13px;
+  color: #768087;
+}
+.valuation-calculator-title > span {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  color: #38616a;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  flex-shrink: 0;
+}
+.valuation-calculator > form {
+  padding: 24px 30px 8px;
+}
+.valuation-main-fields,
+.valuation-intent,
+.valuation-ownership {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  min-width: 0;
+}
+.valuation-intent {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-bottom: 23px;
+}
+.valuation-intent legend {
+  float: left;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 3px 2px 0 0;
+  margin-right: 10px;
+}
+.valuation-intent label {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 14px;
+  cursor: pointer;
+}
+.valuation-page input[type="radio"] {
+  accent-color: #245b66;
+  width: 16px;
+  height: 16px;
+  min-height: 0;
+  margin: 0;
+  flex-shrink: 0;
+}
+.valuation-input-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px 24px;
+}
+.valuation-page .field,
+.valuation-car-dialog .field {
+  margin-bottom: 20px;
+  gap: 7px;
+}
+.valuation-page .field > span,
+.valuation-car-dialog .field > span,
+.valuation-car-field > span {
+  font-size: 13px;
+  font-weight: 500;
+  color: #354952;
+}
+.valuation-page .field small {
+  font-size: 11px;
+  color: #768087;
+  line-height: 1.4;
+}
+.valuation-page .field input,
+.valuation-page .field select,
+.valuation-car-dialog .field input,
+.valuation-car-dialog .field select {
+  min-height: 47px;
+  padding: 11px 12px;
+  border: 1px solid #d2dade;
+  border-radius: 5px;
+  background: #fff;
+  font-size: 14px;
+  font-weight: 400;
+  color: #2e414a;
+  width: 100%;
+}
+.valuation-page .field select,
+.valuation-car-dialog .field select {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 47px;
+  padding-right: 38px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235c737c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-position: right 12px center;
+  background-size: 16px;
+  background-repeat: no-repeat;
+}
+.valuation-page .field select:disabled,
+.valuation-car-dialog .field select:disabled {
+  opacity: 1;
+  background-color: #f5f7f8;
+  color: #718087;
+  cursor: not-allowed;
+}
+.valuation-car-field {
+  display: grid;
+  gap: 7px;
+  margin-bottom: 20px;
+}
+.valuation-car-trigger {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 47px;
+  padding: 10px 12px;
+  border: 1px solid #d2dade;
+  border-radius: 5px;
+  background: #fff;
+  text-align: left;
+  color: #6b7780;
+  font-size: 14px;
+  font-weight: 400;
+}
+.valuation-car-trigger svg {
+  color: #6a8087;
+  flex-shrink: 0;
+}
+.valuation-car-trigger > span {
+  min-width: 0;
+  flex: 1;
+  overflow-wrap: anywhere;
+}
+.valuation-car-trigger strong {
+  display: block;
+  font-size: 14px;
+  color: #304c55;
+  font-weight: 500;
+}
+.valuation-car-trigger small {
+  display: block;
+  color: #79858a;
+  font-size: 11px;
+  font-weight: 400;
+  margin-top: 2px;
+}
+.valuation-distance-input {
+  display: block;
+  position: relative;
+}
+.valuation-distance-input input {
+  padding-right: 40px !important;
+}
+.valuation-distance-input > span {
+  position: absolute;
+  right: 13px;
+  top: 13px;
+  font-size: 13px;
+  color: #7d878c;
+  font-weight: 400;
+}
+.valuation-ownership {
+  margin: 0 0 23px;
+}
+.valuation-ownership legend {
+  font-size: 13px;
+  font-weight: 500;
+  color: #354952;
+  margin-bottom: 10px;
+}
+.valuation-ownership > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.valuation-ownership label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 15px;
+  border: 1px solid #dde3e5;
+  border-radius: 5px;
+  font-size: 13px;
+  font-weight: 400;
+  cursor: pointer;
+}
+.valuation-ownership label.selected {
+  background: #f0f6f6;
+  border-color: #7eaaa9;
+  color: #245b66;
+}
+.valuation-calculator .btn,
+.valuation-car-dialog .btn {
+  min-height: 46px;
+  font-size: 14px;
+  border-radius: 5px;
+  padding: 11px 22px;
+}
+.valuation-calculator .valuation-submit {
+  min-width: 215px;
+  background: #245b66;
+  border-color: #245b66;
+  margin: 0;
+}
+.valuation-privacy {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 12px 0;
+  font-size: 11px;
+  color: #7b858a;
+}
+.valuation-privacy svg {
+  color: #4b8276;
+  flex-shrink: 0;
+}
+.valuation-data-note {
+  padding: 13px 30px;
+  border-top: 1px solid #edf0f1;
+  color: #7b858a;
+  font-size: 11px;
+  background: #fafbfc;
+}
+.valuation-inline-note {
+  font-size: 12px;
+  color: #6a747b;
+  margin-bottom: 12px;
+}
+.valuation-report {
+  margin: 10px 30px 25px;
+  padding: 23px;
+  background: #f7fbfa;
+  border: 1px solid #dce9e4;
+  border-radius: 7px;
+  outline-offset: 3px;
+}
+.valuation-report-top {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid #e1eae6;
+  padding-bottom: 16px;
+  margin-bottom: 21px;
+}
+.valuation-report-top div > span {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: #68867d;
+}
+.valuation-report-top h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 8px 0 5px;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+.valuation-report-top p {
+  font-size: 12px;
+  color: #78857f;
+  overflow-wrap: anywhere;
+}
+.valuation-report-date {
+  font-size: 11px;
+  color: #81918a;
+  flex-shrink: 0;
+}
+.valuation-report h2 {
+  font-size: 17px;
+  line-height: 1.4;
+  color: #3b554e;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.valuation-range {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 12px;
+  color: #245b66;
+  margin: 13px 0 24px;
+}
+.valuation-range strong {
+  font-size: clamp(25px, 3.5vw, 35px);
+  font-weight: 650;
+  line-height: 1.2;
+  letter-spacing: -0.035em;
+}
+.valuation-range > span {
+  font-size: 20px;
+  color: #9aaea5;
+  font-weight: 400;
+}
+.valuation-price-scale {
+  max-width: 540px;
+  height: 7px;
+  background: linear-gradient(90deg, #cdded7, #7bb09e, #245b66);
+  border-radius: 8px;
+  position: relative;
+}
+.valuation-price-scale > span {
+  position: absolute;
+  top: -4px;
+  width: 3px;
+  height: 15px;
+  background: #244d49;
+  border: 1px solid #fff;
+  transform: translateX(-50%);
+}
+.valuation-scale-labels {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  max-width: 540px;
+  margin: 7px 0 16px;
+  font-size: 10px;
+  color: #8b9691;
+}
+.valuation-evidence {
+  color: #64776f;
+  font-size: 12px;
+  margin: 12px 0;
+}
+.valuation-evidence strong {
+  font-weight: 500;
+}
+.valuation-source-note,
+.valuation-insufficient {
+  font-size: 12px;
+  color: #7b8881;
+  line-height: 1.65;
+  margin: 12px 0;
+  max-width: 680px;
+}
+.valuation-insufficient {
+  font-size: 14px;
+}
+.valuation-report-actions {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 22px;
+}
+.valuation-report-actions .text-link {
+  font-size: 13px;
+}
+.valuation-method {
+  margin-top: 22px;
+  padding-top: 14px;
+  border-top: 1px solid #e0e9e4;
+  font-size: 12px;
+  color: #697b72;
+}
+.valuation-method summary {
+  cursor: pointer;
+  color: #4e6c63;
+  font-size: 12px;
+}
+.valuation-method p {
+  margin-top: 10px;
+  line-height: 1.7;
+}
+.valuation-comparables {
+  margin-top: 17px;
+}
+.valuation-comparables h3 {
+  font-size: 13px;
+  color: #63796f;
+}
+.valuation-comparables a,
+.valuation-comparable {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  border-bottom: 1px solid #e1e9e5;
+  padding: 10px 0;
+  font-size: 12px;
+}
+.valuation-comparables strong {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 500;
+}
+.valuation-about {
+  margin-top: 42px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid #e5e9eb;
+}
+.valuation-about h2,
+.valuation-faq h2 {
+  font-size: 23px;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  color: #2c3f47;
+  margin-bottom: 14px;
+}
+.valuation-about > p {
+  font-size: 14px;
+  line-height: 1.8;
+  color: #6a767c;
+  max-width: 890px;
+}
+.valuation-feature-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  margin: 30px 0 0;
+}
+.valuation-feature-row article {
+  text-align: center;
+  padding: 12px;
+}
+.valuation-feature-row svg {
+  color: #638b92;
+  margin-bottom: 9px;
+}
+.valuation-feature-row h3 {
+  font-size: 14px;
+  letter-spacing: normal;
+  color: #41565e;
+  margin-bottom: 6px;
+}
+.valuation-feature-row p {
+  font-size: 12px;
+  color: #889298;
+}
+.valuation-faq {
+  margin-top: 34px;
+}
+.valuation-faq details {
+  border-bottom: 1px solid #e5e9eb;
+  padding: 17px 0;
+}
+.valuation-faq summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  font-size: 14px;
+  color: #455861;
+  font-weight: 500;
+  cursor: pointer;
+}
+.valuation-faq summary > span {
+  color: #8d9fa6;
+  font-size: 21px;
+  font-weight: 400;
+}
+.valuation-faq details p {
+  margin-top: 12px;
+  color: #7a878d;
+  font-size: 13px;
+  line-height: 1.8;
+}
+.valuation-page .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.valuation-car-dialog {
+  width: min(580px, calc(100vw - 32px));
+  max-height: calc(100dvh - 48px);
+  margin: auto;
+  padding: 25px;
+  border: 1px solid #dbe2e5;
+  border-radius: 12px;
+  color: #30454e;
+  background: white;
+  box-shadow: 0 24px 80px #132e3840;
+}
+.valuation-car-dialog::backdrop {
+  background: #11273288;
+}
+.valuation-dialog-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 23px;
+}
+.valuation-dialog-heading span {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: #799097;
+}
+.valuation-dialog-heading h2 {
+  font-size: 23px;
+  line-height: 1.3;
+  margin-top: 5px;
+}
+.valuation-picker-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 16px;
+}
+.valuation-picker-fields .field:first-child {
+  grid-column: 1 / -1;
+}
+.valuation-picker-help {
+  font-size: 12px;
+  line-height: 1.6;
+  color: #819097;
+  margin: 0 0 18px;
+}
+.valuation-entry-toggle {
+  display: block;
+  padding: 0;
+  margin: 0 0 20px;
+  font-size: 13px;
+  font-weight: 400;
+  color: #245b66;
+  background: transparent;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.valuation-car-dialog .btn {
+  width: 100%;
+}
+@media (max-width: 650px) {
+  .valuation-heading {
+    padding-block: 19px 22px;
+  }
+  .valuation-heading p {
+    font-size: 14px;
+  }
+  .valuation-calculator-title,
+  .valuation-calculator > form {
+    padding: 21px;
+  }
+  .valuation-calculator-title > span {
+    display: none;
+  }
+  .valuation-input-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .valuation-ownership > div {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .valuation-ownership label {
+    padding: 10px;
+    font-size: 12px;
+  }
+  .valuation-calculator .valuation-submit {
+    width: 100%;
+  }
+  .valuation-report {
+    margin: 5px 15px 20px;
+    padding: 18px;
+  }
+  .valuation-report-top {
+    display: block;
+  }
+  .valuation-report-date {
+    display: block;
+    margin-top: 8px;
+  }
+  .valuation-report-top h3 {
+    font-size: 18px;
+  }
+  .valuation-data-note {
+    padding-inline: 21px;
+  }
+  .valuation-feature-row {
+    gap: 8px;
+  }
+  .valuation-feature-row article {
+    padding: 8px 0;
+  }
+  .valuation-feature-row h3 {
+    font-size: 12px;
+  }
+  .valuation-feature-row p {
+    font-size: 11px;
+  }
+  .valuation-report-actions {
+    gap: 14px;
+  }
+  .valuation-about h2,
+  .valuation-faq h2 {
+    font-size: 21px;
+  }
+}
+@media (max-width: 420px) {
+  .valuation-car-dialog {
+    padding: 20px;
+  }
+  .valuation-picker-fields {
+    grid-template-columns: 1fr;
+  }
+  .valuation-range strong {
+    font-size: 25px;
+  }
+  .valuation-feature-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .valuation-feature-row article {
+    text-align: left;
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    gap: 2px 12px;
+  }
+  .valuation-feature-row svg {
+    grid-row: span 2;
+    margin: 2px 0 0;
+  }
+  .valuation-about {
+    margin-top: 32px;
+  }
+}

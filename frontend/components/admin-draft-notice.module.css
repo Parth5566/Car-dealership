@@ -1,0 +1,38 @@
+.banner {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 20px;
+  margin-bottom: 26px;
+  border: 1px solid #e3cca0;
+  border-radius: 14px;
+  background: #fff8e9;
+  color: #765221;
+}
+.copy {
+  flex: 1;
+  min-width: 190px;
+}
+.copy p {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.copy span {
+  display: block;
+  margin-top: 4px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #6e6656;
+}
+.banner a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 13px;
+}
+.banner a:hover {
+  text-decoration: underline;
+}

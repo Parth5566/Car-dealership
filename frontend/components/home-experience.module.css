@@ -1,0 +1,302 @@
+.experience {
+  padding-block: 56px 20px;
+  background: #f4f6f3;
+}
+.tabs {
+  display: flex;
+  width: min(420px, 100%);
+  padding: 6px;
+  gap: 6px;
+  margin: 0 auto 28px;
+  border-radius: 13px;
+  background: #e3ece6;
+}
+.tabs button {
+  flex: 1;
+  padding: 12px 18px;
+  border-radius: 9px;
+  font-weight: 700;
+  font-size: 14px;
+  background: transparent;
+  color: #37574d;
+}
+.tabs button[aria-selected="true"] {
+  background: #244f48;
+  color: #fff;
+  box-shadow: 0 3px 8px #193b4210;
+}
+.benefits {
+  background: #fff;
+  border-radius: 24px;
+  padding: 42px 32px 20px;
+  box-shadow: 0 15px 45px #193b4208;
+}
+.heading {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 32px;
+}
+.heading > span {
+  color: #8b6a32;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  font-weight: 700;
+}
+.heading h2 {
+  margin-top: 12px;
+  font-size: clamp(27px, 2.7vw, 35px);
+  color: #193b42;
+  line-height: 1.2;
+}
+.heading > p {
+  color: #697970;
+  font-size: 15px;
+  line-height: 1.65;
+  margin-top: 13px;
+}
+.photoGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+}
+.photoCard {
+  text-align: center;
+  min-width: 0;
+}
+.photo {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  aspect-ratio: 1.2;
+  background: #e6eee9;
+}
+.photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(transparent 35%, #142c3455);
+}
+.photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.25s;
+}
+.photoIcon {
+  position: absolute;
+  z-index: 1;
+  bottom: 15px;
+  left: calc(50% - 25px);
+  width: 50px;
+  height: 50px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  border-radius: 50%;
+  background: #193b4266;
+  border: 1px solid #ffffff70;
+  backdrop-filter: blur(8px);
+}
+.photoCard h3 {
+  font-size: 18px;
+  color: #244c44;
+  line-height: 1.3;
+  margin-top: 21px;
+}
+.photoCard > p {
+  font-size: 14px;
+  color: #63736b;
+  line-height: 1.65;
+  margin: 10px auto 0;
+  max-width: 270px;
+}
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+.actions > a {
+  gap: 10px;
+}
+.process {
+  padding-block: 62px 44px;
+}
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 40px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.steps li {
+  text-align: center;
+}
+.processArt {
+  position: relative;
+  max-width: 340px;
+  margin: 0 auto 20px;
+}
+.processArt svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.stepNumber {
+  position: absolute;
+  left: 15px;
+  bottom: 5px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #244f48;
+  color: #fff;
+  width: 36px;
+  height: 36px;
+  font-weight: 700;
+  font-size: 12px;
+  border: 4px solid #f4f6f3;
+}
+.steps h3 {
+  color: #244c44;
+  font-size: 20px;
+  line-height: 1.35;
+}
+.steps p {
+  color: #66776d;
+  line-height: 1.7;
+  font-size: 14px;
+  margin: 10px auto 0;
+  max-width: 320px;
+}
+@media (hover: hover) {
+  .photoCard:hover .photo img {
+    transform: scale(1.035);
+  }
+}
+@media (max-width: 1000px) {
+  .photoGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px 24px;
+  }
+  .photo {
+    aspect-ratio: 1.5;
+  }
+  .steps {
+    gap: 22px;
+  }
+  .steps h3 {
+    font-size: 18px;
+  }
+}
+@media (max-width: 650px) {
+  .experience {
+    padding-top: 34px;
+  }
+  .benefits {
+    padding: 30px 18px 18px;
+    border-radius: 18px;
+  }
+  .heading > p {
+    font-size: 14px;
+  }
+  .photoGrid {
+    gap: 26px 14px;
+  }
+  .photo {
+    aspect-ratio: 0.95;
+    border-radius: 12px;
+  }
+  .photoCard h3 {
+    font-size: 15px;
+    margin-top: 14px;
+  }
+  .photoCard > p {
+    font-size: 12px;
+    line-height: 1.65;
+  }
+  .photoIcon {
+    width: 40px;
+    height: 40px;
+    left: calc(50% - 20px);
+    bottom: 10px;
+  }
+  .photoIcon svg {
+    width: 23px;
+    height: 23px;
+  }
+  .actions {
+    flex-direction: column;
+    gap: 17px;
+    margin-top: 26px;
+  }
+  .actions > a:first-child {
+    width: 100%;
+    justify-content: center;
+  }
+  .process {
+    padding-block: 42px 28px;
+  }
+  .steps {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .processArt {
+    max-width: 290px;
+    margin-bottom: 10px;
+  }
+  .steps h3 {
+    font-size: 21px;
+  }
+  .steps p {
+    max-width: 300px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .photo img {
+    transition: none;
+  }
+  .photoCard:hover .photo img {
+    transform: none;
+  }
+}
+
+/* Phone: photo cards and steps become swipeable rows instead of tall stacks. */
+@media (max-width: 760px) {
+  .photoGrid,
+  .steps {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    margin-inline: -18px;
+    padding: 2px 18px 10px;
+    scroll-padding-inline: 18px;
+    scrollbar-width: none;
+  }
+  .photoGrid::-webkit-scrollbar,
+  .steps::-webkit-scrollbar {
+    display: none;
+  }
+  .photoCard {
+    flex: 0 0 64%;
+    scroll-snap-align: start;
+  }
+  .photoCard > p {
+    font-size: 14px;
+  }
+  .steps > li {
+    flex: 0 0 78%;
+    scroll-snap-align: start;
+  }
+  .steps h3 {
+    font-size: 19px;
+  }
+  .processArt {
+    max-width: 210px;
+  }
+}
