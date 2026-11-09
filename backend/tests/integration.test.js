@@ -506,6 +506,12 @@ test("rich blog JSON, per-use image metadata and scheduling remain consistent in
   );
   assert.equal(live.reading_minutes, 1);
   await request(server).get(`/api/v1/blog-media/${image.id}`).expect(200);
+  const imageFeed = (await request(server).get("/api/v1/seo/blog").expect(200))
+    .body.items;
+  assert.deepEqual(
+    imageFeed.find((item) => item.slug === content.slug).images,
+    [`/api/v1/blog-media/${image.id}`],
+  );
   await save(
     {
       version: post.version - 1,
@@ -532,6 +538,13 @@ test("rich blog JSON, per-use image metadata and scheduling remain consistent in
   );
   await request(server).get(`/api/v1/blog-media/${image.id}`).expect(404);
   await admin.get(image.url).expect(200);
+  const revisedFeed = (
+    await request(server).get("/api/v1/seo/blog").expect(200)
+  ).body.items;
+  assert.deepEqual(
+    revisedFeed.find((item) => item.slug === content.slug).images,
+    [],
+  );
   const library = (await admin.get(endpoint + "/media").expect(200)).body;
   assert.ok(library.items.some((asset) => asset.id === image.id));
   await protect(admin.patch(endpoint + "/status"))

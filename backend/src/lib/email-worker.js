@@ -91,7 +91,11 @@ function createEmailWorker({
             from: { name: "NCR Wheelz", address: config.from },
             to: { address: job.recipient },
             replyTo: { address: data.replyTo },
-            subject: data.subject,
+            // Keep legacy queue records from sending with an empty subject.
+            subject:
+              (typeof data.subject === "string"
+                ? data.subject.replace(/[\r\n]+/g, " ").trim()
+                : "") || "NCR Wheelz · Your website request",
             text: data.text,
             html: data.html,
             messageId: `<${job.event_key}@${new URL(env.siteUrl).hostname}>`,

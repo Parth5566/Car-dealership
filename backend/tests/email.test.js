@@ -102,6 +102,8 @@ test("all four event types notify each staff inbox separately and acknowledge on
       [...env.email.recipients, event.contact.email],
     );
     for (const mail of emails) {
+      assert.ok(mail.subject.trim().length > 10);
+      assert.match(mail.subject, /NCR Wheelz/);
       assert.ok(!mail.html.includes("<script>"));
       assert.ok(!mail.html.includes("<img src=x"));
       assert.ok(!mail.subject.includes("\n"));
@@ -269,6 +271,11 @@ test("real Nodemailer composes isolated staff and customer envelopes without net
       envelopes.push(composed.envelope);
       assert.ok(Buffer.isBuffer(composed.message));
       assert.match(composed.message.toString(), /MIME-Version: 1.0/);
+      assert.match(composed.message.toString(), /^Subject: .+$/m);
+      assert.match(
+        composed.message.toString(),
+        /Content-Type: multipart\/alternative/,
+      );
       return { accepted: composed.envelope.to };
     },
   });
@@ -283,6 +290,29 @@ test("real Nodemailer composes isolated staff and customer envelopes without net
   );
   await state.worker.stop();
   transport.close?.();
+});
+
+test("worker supplies a subject for legacy blank queue entries and flattens line breaks", async () => {
+  const state = setup();
+  for (const [index, subject] of [
+    undefined,
+    " \r\n ",
+    "NCR Wheelz\r\nRequest received",
+  ].entries()) {
+    const data = JSON.parse(state.jobs[index].data);
+    data.subject = subject;
+    state.jobs[index].data = JSON.stringify(data);
+  }
+  await state.worker.runOnce();
+  assert.deepEqual(
+    state.sends.map((mail) => mail.subject),
+    [
+      "NCR Wheelz · Your website request",
+      "NCR Wheelz · Your website request",
+      "NCR Wheelz Request received",
+    ],
+  );
+  await state.worker.stop();
 });
 
 test("one failing recipient retries independently while the other inbox and acknowledgement succeed", async () => {
@@ -444,4 +474,21 @@ test("password reset email carries the link, escapes the name and is sent from N
   assert.equal(sent[0].to, "riya@example.test");
   assert.equal(sent[0].from.name, "NCR Wheelz");
   assert.ok(sent[0].text.startsWith("Hi Riya,"));
+});
+
+test("insurance leads notify both staff inboxes and acknowledge the insurance request", () => {
+  const emails = messages({
+    ...event,
+    source: "/insurance",
+    message: "Insurance enquiry: Renew my insurance\nVehicle: Swift 2020",
+  });
+  assert.equal(emails.length, 3);
+  for (const email of emails.filter((item) => item.audience === "staff")) {
+    assert.match(email.subject, /insurance enquiry/);
+    assert.match(email.text, /Renew my insurance/);
+    assert.match(email.text, /\/admin\/leads/);
+  }
+  const customer = emails.find((item) => item.audience === "customer");
+  assert.equal(customer.to, event.contact.email);
+  assert.match(customer.text, /Insurance enquiry/);
 });

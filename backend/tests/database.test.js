@@ -6,6 +6,83 @@ const crypto = require("node:crypto");
 process.env.JWT_SECRET = "isolated-database-regression-secret-".repeat(3);
 const db = require("../src/config/db");
 const { migrate } = require("../scripts/database");
+const { databaseOptions } = require("../src/config/database-options");
+
+test("database options normalize copied connection fields without changing passwords", () => {
+  const options = databaseOptions({
+    DB_HOST: " mysql.example.com\n",
+    DB_PORT: " 19826 ",
+    DB_USER: " avnadmin ",
+    DB_NAME: " car_dealership ",
+    DB_PASSWORD: " keep password spaces ",
+  });
+  assert.equal(options.host, "mysql.example.com");
+  assert.equal(options.port, 19826);
+  assert.equal(options.user, "avnadmin");
+  assert.equal(options.database, "car_dealership");
+  assert.equal(options.password, " keep password spaces ");
+  assert.equal(options.ssl, undefined);
+  assert.equal(databaseOptions({}).host, "127.0.0.1");
+  for (const host of [
+    "https://mysql.example.com",
+    "mysql.example.com:19826",
+    "mysql. example.com",
+    "mysql.example.com/defaultdb",
+  ])
+    assert.throws(() => databaseOptions({ DB_HOST: host }), /DB_HOST/);
+  assert.throws(() => databaseOptions({ DB_PORT: "wrong" }), /DB_PORT/);
+});
+
+test("hosted database TLS validates certificates and hostnames with either CA input", async () => {
+  const ca = require("node:tls").rootCertificates[0];
+  const directory = await fs.mkdtemp(
+    path.join(require("node:os").tmpdir(), "ncr-db-ca-"),
+  );
+  try {
+    const filename = path.join(directory, "ca.pem");
+    await fs.writeFile(filename, ca);
+    for (const input of [
+      { DB_SSL_CA: ca },
+      { DB_SSL_CA: ca.replaceAll("\n", "\\n") },
+      { DB_SSL_CA_FILE: filename },
+    ]) {
+      const options = databaseOptions({ DB_SSL: "true", ...input });
+      assert.equal(options.ssl.ca.trim(), ca.trim());
+      assert.equal(options.ssl.rejectUnauthorized, true);
+      assert.equal(options.ssl.verifyIdentity, true);
+      assert.equal(options.ssl.minVersion, "TLSv1.2");
+    }
+    assert.equal(
+      databaseOptions({ DB_SSL: "true" }).ssl.rejectUnauthorized,
+      true,
+    );
+    assert.throws(() => databaseOptions({ DB_SSL: "disabled" }), /DB_SSL/);
+    assert.throws(() => databaseOptions({ DB_SSL_CA: ca }), /DB_SSL=true/);
+    assert.throws(
+      () =>
+        databaseOptions({
+          DB_SSL: "true",
+          DB_SSL_CA: ca,
+          DB_SSL_CA_FILE: filename,
+        }),
+      /not both/,
+    );
+    assert.throws(
+      () => databaseOptions({ DB_SSL: "true", DB_SSL_CA: "not a certificate" }),
+      /certificate is invalid/,
+    );
+    assert.throws(
+      () =>
+        databaseOptions({
+          DB_SSL: "true",
+          DB_SSL_CA_FILE: path.join(directory, "missing"),
+        }),
+      /Cannot read DB_SSL_CA_FILE/,
+    );
+  } finally {
+    await fs.rm(directory, { recursive: true, force: true });
+  }
+});
 
 test("a failed commit acknowledgement stays identifiable even when rollback also fails", async (t) => {
   const failure = new Error("Lost commit acknowledgement");

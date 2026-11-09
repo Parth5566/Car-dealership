@@ -75,14 +75,27 @@ publicRouter.get(
   "/seo/blog",
   wrap(async (req, res) => {
     const rows = await query(
-      "SELECT slug,updated_at,cover_id,published_at FROM nw_blog_posts WHERE status='published' AND published_at<=UTC_TIMESTAMP() ORDER BY id",
+      "SELECT slug,updated_at,cover_id,published_at,id FROM nw_blog_posts WHERE status='published' AND published_at<=UTC_TIMESTAMP() ORDER BY id",
     );
+    const inlineImages = await query(
+      "SELECT r.post_id,r.media_id FROM nw_blog_media_refs r JOIN nw_blog_posts p ON p.id=r.post_id JOIN nw_blog_media m ON m.id=r.media_id AND m.post_id=p.id WHERE p.status='published' AND p.published_at<=UTC_TIMESTAMP() ORDER BY r.post_id,r.media_id",
+    );
+    const imagesByPost = new Map();
+    for (const image of inlineImages) {
+      if (!imagesByPost.has(image.post_id)) imagesByPost.set(image.post_id, []);
+      imagesByPost.get(image.post_id).push(image.media_id);
+    }
     res.json({
       items: rows.map((row) => ({
         slug: row.slug,
         updated_at:
           row.published_at > row.updated_at ? row.published_at : row.updated_at,
-        images: row.cover_id ? [`/api/v1/blog-media/${row.cover_id}`] : [],
+        images: [
+          ...new Set([row.cover_id, ...(imagesByPost.get(row.id) || [])]),
+        ]
+          .filter(Boolean)
+          .slice(0, 1000)
+          .map((id) => `/api/v1/blog-media/${id}`),
       })),
     });
   }),

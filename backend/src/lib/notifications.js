@@ -44,7 +44,10 @@ function emailBody(title, paragraphs, details, link) {
   };
 }
 function messages(event, config = env.email) {
-  const kind = kinds[event.kind];
+  const kind =
+    event.kind === "contact" && event.source === "/insurance"
+      ? { ...kinds.contact, title: "Insurance enquiry" }
+      : kinds[event.kind];
   if (!kind || !Number.isSafeInteger(Number(event.id)) || Number(event.id) < 1)
     throw new Error("Invalid notification event");
   const reference = `${kind.prefix}-${event.id}`;

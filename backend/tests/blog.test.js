@@ -127,11 +127,26 @@ db.query = async (sql, values = []) => {
           new Date(post.published_at.replace(" ", "T") + "Z").getTime() <=
             Date.now(),
       )
-      .map(({ slug, updated_at, cover_id }) => ({
+      .map(({ id, slug, updated_at, cover_id, published_at }) => ({
+        id,
         slug,
         updated_at,
         cover_id,
+        published_at,
       }));
+  if (sql.startsWith("SELECT r.post_id,r.media_id"))
+    return refs.filter((ref) =>
+      posts.some(
+        (post) =>
+          post.id === ref.post_id &&
+          post.status === "published" &&
+          new Date(post.published_at.replace(" ", "T") + "Z").getTime() <=
+            Date.now() &&
+          media.some(
+            (image) => image.id === ref.media_id && image.post_id === post.id,
+          ),
+      ),
+    );
   if (sql.startsWith("DELETE FROM nw_blog_media_refs")) {
     refs = refs.filter((ref) => ref.post_id !== values[0]);
     return { affectedRows: 1 };
@@ -319,6 +334,37 @@ test("blog drafts stay private until deliberate publication and disappear on unp
   });
   assert.equal(restored.body.status, "draft");
 });
+test("blog sitemap includes banner and referenced inline images once, excluding unused and private media", async () => {
+  await invoke(adminRouter, "/", "post", { ...content, status: "published" });
+  await invoke(adminRouter, "/", "post", { ...content, slug: "private-draft" });
+  posts[0].cover_id = 1;
+  media = [
+    { id: 1, post_id: 1 },
+    { id: 2, post_id: 1 },
+    { id: 3, post_id: 1 }, // Uploaded but unused.
+    { id: 4, post_id: 2 },
+  ];
+  refs = [
+    { post_id: 1, media_id: 1 },
+    { post_id: 1, media_id: 2 },
+    { post_id: 2, media_id: 4 },
+  ];
+  let feed = (await invoke(publicRouter, "/seo/blog", "get")).body.items;
+  assert.equal(feed.length, 1);
+  assert.deepEqual(feed[0].images, [
+    "/api/v1/blog-media/1",
+    "/api/v1/blog-media/2",
+  ]);
+  posts[0].published_at = "2026-10-27 00:00:00";
+  assert.equal(
+    (await invoke(publicRouter, "/seo/blog", "get")).body.items[0].updated_at,
+    "2026-10-27 00:00:00",
+  );
+  posts[0].published_at = "2099-01-01 00:00:00";
+  feed = (await invoke(publicRouter, "/seo/blog", "get")).body.items;
+  assert.deepEqual(feed, []);
+});
+
 test("blog publishing validates required fields, block types, lengths and image descriptions", async () => {
   assert.equal(
     (await invoke(adminRouter, "/", "post", { title: "An unfinished idea" }))
