@@ -29,6 +29,12 @@ if (process.env.TRUST_PROXY) {
     process.env.TRUST_PROXY.split(",").map((value) => value.trim()),
   );
 }
+if (process.env.DEPLOYMENT_DIAGNOSTICS === "true")
+  app.use(
+    require("./lib/deployment-diagnostics").proxyDiagnostic(
+      app.get("trust proxy fn"),
+    ),
+  );
 app.use(helmet({ crossOriginResourcePolicy: { policy: "same-site" } }));
 app.use(cors({ origin: env.origin, credentials: true }));
 app.use(cookieParser());
@@ -56,7 +62,7 @@ app.use(
     limit: 300,
     standardHeaders: "draft-8",
     legacyHeaders: false,
-    // The API listens on loopback only. Server-side page rendering reads it
+    // In local deployments, server-side page rendering reads the API
     // directly (no X-Forwarded-For), while browser calls arrive through the
     // Next.js rewrite with the visitor's forwarded address. Counting those
     // internal reads made every page view share one 300/min allowance.

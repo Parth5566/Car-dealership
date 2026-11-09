@@ -3,7 +3,11 @@ const { app } = require("./src/app");
 const { pool } = require("./src/config/db");
 const worker = require("./src/lib/email-worker").createEmailWorker();
 const server = app.listen(env.port, "0.0.0.0", () => {
-    console.log(`NCR Wheelz API: http://localhost:${env.port}`);
+  console.log(`NCR Wheelz API: http://localhost:${env.port}`);
+  if (process.env.DEPLOYMENT_DIAGNOSTICS === "true")
+    void require("./src/lib/deployment-diagnostics").databaseDnsDiagnostic(
+      env.db,
+    );
   worker.start();
 });
 for (const signal of ["SIGTERM", "SIGINT"])

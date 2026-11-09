@@ -7,6 +7,68 @@ process.env.JWT_SECRET = "isolated-database-regression-secret-".repeat(3);
 const db = require("../src/config/db");
 const { migrate } = require("../scripts/database");
 const { databaseOptions } = require("../src/config/database-options");
+const {
+  databaseDnsDiagnostic,
+  proxyDiagnostic,
+} = require("../src/lib/deployment-diagnostics");
+
+test("deployment DNS diagnostics identify the configured host without logging secrets", async () => {
+  const logs = [];
+  const options = {
+    host: "mysql.example.com",
+    port: 19826,
+    database: "defaultdb",
+    user: "private-user",
+    password: "private-password",
+    ssl: { ca: "private-ca" },
+  };
+  const log = (line) => logs.push(JSON.parse(line));
+  await databaseDnsDiagnostic(options, log, async (host, settings) => {
+    assert.equal(host, options.host);
+    assert.deepEqual(settings, { all: true });
+    return [{ address: "192.0.2.1", family: 4 }];
+  });
+  await databaseDnsDiagnostic(options, log, async () => {
+    throw Object.assign(new Error("private-error-message"), {
+      code: "ENOTFOUND",
+    });
+  });
+  assert.equal(logs[0].status, "resolved");
+  assert.equal(logs[0].address_count, 1);
+  assert.equal(logs[1].code, "ENOTFOUND");
+  assert.equal(logs[1].host, options.host);
+  assert.equal(JSON.stringify(logs).includes("private-"), false);
+});
+
+test("proxy diagnostics log only one forwarded connection and do not change trust", () => {
+  const logs = [];
+  let nextCount = 0;
+  const middleware = proxyDiagnostic(
+    (ip) => ip === "127.0.0.1",
+    (line) => logs.push(JSON.parse(line)),
+  );
+  const next = () => nextCount++;
+  middleware({ headers: {}, socket: { remoteAddress: "127.0.0.1" } }, {}, next);
+  const request = {
+    headers: {
+      "x-forwarded-for": "198.51.100.1, 192.0.2.2",
+      cookie: "private-cookie",
+    },
+    socket: { remoteAddress: "10.0.0.4" },
+  };
+  middleware(request, {}, next);
+  middleware(request, {}, next);
+  assert.equal(nextCount, 3);
+  assert.deepEqual(logs, [
+    {
+      event: "proxy_diagnostic",
+      peer: "10.0.0.4",
+      peer_trusted: false,
+      forwarded_entries: 2,
+    },
+  ]);
+  assert.equal(request.headers.cookie, "private-cookie");
+});
 
 test("database options normalize copied connection fields without changing passwords", () => {
   const options = databaseOptions({
